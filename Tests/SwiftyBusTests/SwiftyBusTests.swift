@@ -11,9 +11,13 @@ final class SwiftyBusTests: XCTestCase {
     }
   }
 
+  class MyEvent: Event {}
+
 
   func testBasic() {
     let bus = SwiftyBus()
+
+    bus.post(MyEvent())
 
     let listener = bus.listen(TestEvent.self) { testEvent in
       print(testEvent.value)
