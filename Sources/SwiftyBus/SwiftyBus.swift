@@ -1,7 +1,9 @@
-final class SwiftyBus {
+public final class SwiftyBus {
 
   private var listenerMap = [Int: [Listener]]()
   private var registeredEvents = [Event.Type]()
+
+  public init() {}
 
   /**
    Registers a synchronous listener to the eventbus.
@@ -11,7 +13,7 @@ final class SwiftyBus {
    - Returns: The listener that is registered.
    */
   @discardableResult
-  func listen<T: Event>(_ event: T.Type, _ closure: @escaping (T) -> Void) -> Listener {
+  public func listen<T: Event>(_ event: T.Type, _ closure: @escaping (T) -> Void) -> Listener {
     let listener = SynchronousListener<T>(closure: closure)
     let index = getEventRegistrationIndex(event: event)
 
@@ -32,7 +34,7 @@ final class SwiftyBus {
    - Returns: The listener that is registered.
    */
   @discardableResult
-  func async<T: Event>(_ event: T.Type, _ closure: @escaping (T) -> Void) -> Listener {
+  public func async<T: Event>(_ event: T.Type, _ closure: @escaping (T) -> Void) -> Listener {
     let listener = AsynchronousListener<T>(closure: closure)
     let index = getEventRegistrationIndex(event: event)
 
@@ -52,7 +54,7 @@ final class SwiftyBus {
    - Returns: Weather all the listeners that were invoked, if any, succeed invocation.
    */
   @discardableResult
-  func post<T: Event>(_ event: T) -> Bool {
+  public func post<T: Event>(_ event: T) -> Bool {
     var passes = true
     if let listeners = listenerMap[getEventRegistrationIndex(event: T.self)] {
       for listener in listeners {
@@ -68,7 +70,7 @@ final class SwiftyBus {
    Unregisters a listener.
    - Parameter listener: The listener to unregister.
    */
-  func unregister(_ listener: Listener) -> Void {
+  public func unregister(_ listener: Listener) -> Void {
     if let listeners = listenerMap[getEventRegistrationIndex(event: listener.getType())] {
       for (i, subscribed) in listeners.enumerated() {
         if subscribed.getId() == listener.getId() {
