@@ -2,6 +2,18 @@
 
 A simple eventbus written in Swift.
 
+# Getting started
+To add `SwiftyBus` as a dependency do the following
+
+Declare the dependency in your `Package.swift`
+```swift
+.package(url: "https://github.com/Hippo/SwiftyBus.git", from: "1.0.2")
+```
+
+Then you will need to add it to your target as such
+```swift
+.product(name: "SwiftyBus", package: "SwiftyBus")
+```
 
 # Import the library
 ```swift
